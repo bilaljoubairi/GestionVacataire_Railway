@@ -469,13 +469,13 @@ export default function Index({ vacataires }) {
                                                             Consulter
                                                         </Link>
 
-                                                        <Link
+                                                        {/* <Link
                                                             href={`/vacataires/${vacataire.id}/edit`}
                                                             className="btn btn-sm text-dark bg-light border"
                                                             style={{ borderRadius: "6px", fontSize: "13px" }}
                                                         >
                                                             Modifier
-                                                        </Link>
+                                                        </Link> */}
 
                                                         {vacataire.statut !== "accepte" && (
                                                             <button

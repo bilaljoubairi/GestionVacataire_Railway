@@ -37,6 +37,23 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
         [SuperAdminController::class, 'dashboard']
     )->name('superadmin.dashboard');
 
+    //liste des vacataires
+    // ================= GESTION VACATAIRES SUPERADMIN =================
+
+    Route::middleware(['auth', 'superadmin'])->group(function () {
+
+        Route::get(
+            '/superadmin/vacataires',
+            [VacataireController::class, 'superadminIndex']
+        )->name('superadmin.vacataires');
+
+        // DETAILS
+        Route::get(
+            '/superadmin/vacataires/{vacataire}',
+            [VacataireController::class, 'showSuperAdmin']
+        )->name('superadmin.vacataires.show');
+    });
+
     // LISTE ADMINS
     Route::get(
         '/superadmin/admins',
@@ -63,13 +80,35 @@ Route::get(
     [VacataireController::class, 'espace']
 );
 
+// Route::get(
+//     '/suivi-dossier',
+//     [VacataireController::class, 'suiviDossier']
+// );
+Route::get(
+    '/suivi-dossier/{vacataire}',
+    [VacataireController::class, 'suiviDossier']
+)->name('suivi.dossier');
 Route::post(
     '/espace-vacataire/recherche',
     [VacataireController::class, 'recherche']
 );
 
 
-   // AJOUT VACATAIRE
+// MODIFIER
+// page edit dossier
+Route::get(
+    '/espace-vacataire/edit/{vacataire}',
+    [VacataireController::class, 'edit']
+)->name('vacataire.edit');
+
+// update dossier
+Route::put(
+    '/espace-vacataire/update/{vacataire}',
+    [VacataireController::class, 'update']
+)->name('vacataire.update');
+
+
+// AJOUT VACATAIRE
 Route::get(
     '/vacataires/create',
     [VacataireController::class, 'create']
@@ -97,16 +136,6 @@ Route::middleware(['auth'])->group(function () {
         [VacataireController::class, 'show']
     )->name('vacataires.show');
 
-    // MODIFIER
-    Route::get(
-        '/vacataires/{vacataire}/edit',
-        [VacataireController::class, 'edit']
-    )->name('vacataires.edit');
-
-    Route::put(
-        '/vacataires/{vacataire}',
-        [VacataireController::class, 'update']
-    )->name('vacataires.update');
 
     // SUPPRIMER
 

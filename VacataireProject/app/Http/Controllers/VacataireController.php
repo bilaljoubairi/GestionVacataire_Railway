@@ -71,24 +71,63 @@ class VacataireController extends Controller
     // ================= STORE =================
     public function store(Request $request)
     {
-        $validated = $request->validate([
+
+        $request->validate([
 
             'nom' => 'required',
+
             'prenom' => 'required',
 
-            'cin' => 'required|unique:vacataires',
+            'cin' => 'required',
 
-            'email' => 'required|email|unique:vacataires',
+            'email' => 'required|email',
 
             'specialite' => 'required',
+
             'photo' => 'required|image|mimes:jpg,jpeg,png|max:2048',
 
-            'diplome_file' => 'required|mimes:pdf,jpg,jpeg,png|max:4096',
+            'cin_file' => 'required|mimes:pdf,jpg,jpeg,png|max:3072',
 
-            'rib_file' => 'required|mimes:pdf,jpg,jpeg,png|max:4096',
+            'diplome_file' => 'required|mimes:pdf,jpg,jpeg,png|max:3072',
 
-            'demande_file' => 'required|mimes:pdf,jpg,jpeg,png|max:4096',
+            'rib_file' => 'required|mimes:pdf,jpg,jpeg,png|max:3072',
 
+            'demande_file' => 'required|mimes:pdf,jpg,jpeg,png|max:3072',
+
+        ], [
+            'nom.required' => 'Le nom est obligatoire.',
+
+            'prenom.required' => 'Le prénom est obligatoire.',
+
+            'cin.required' => 'Le CIN est obligatoire.',
+
+            'email.required' => 'L’email est obligatoire.',
+
+            'email.email' => 'Format email invalide.',
+
+            'specialite.required' => 'La spécialité est obligatoire.',
+
+            'photo.required' => 'La photo est obligatoire.',
+
+            'photo.image' => 'Le fichier doit être une image.',
+
+            'photo.max' => 'La photo dépasse 2MB.',
+
+            'cin_file.required' => 'Le fichier CIN est obligatoire.',
+
+            'cin_file.max' => 'La photo de CIN dépasse 3MB.',
+
+            'diplome_file.required' => 'Le diplôme est obligatoire.',
+
+            'diplome_file.max' => 'la photo de Diplome dépasse 3MB',
+
+            'rib_file.required' => 'Le RIB est obligatoire.',
+
+            'rib_file.max' => 'le fichier RIB dépasse 3MB',
+
+            'demande_file.required' => 'La demande manuscrite est obligatoire.',
+
+            'demande_file.max' => 'Le fichier de demande dépasse 3MB',
         ]);
 
         $cinFile = null;
@@ -269,10 +308,13 @@ class VacataireController extends Controller
 
         ]);
 
-        return redirect('/vacataires');
+     
+ return redirect(
+        "/suivi-dossier/{$vacataire->id}"
+    );
+
     }
 
-  
     public function destroy($id)
     {
         $vacataire = Vacataire::find($id);
@@ -286,28 +328,89 @@ class VacataireController extends Controller
     }
     //=============================================vacataire Dashboard------------------------------------------
     public function espace()
-{
-    return Inertia::render('Vacataires/EspaceVacataire');
-}
+    {
+        return Inertia::render(
+            'Vacataires/EspaceVacataire'
+        );
+    }
 
-public function recherche(Request $request)
+    public function recherche(Request $request)
 {
-    $vacataire = Vacataire::where('email', $request->email)
-        ->where('cin', $request->cin)
-        ->first();
+    $vacataire = Vacataire::where(
+        'email',
+        $request->email
+    )
+    ->where(
+        'cin',
+        $request->cin
+    )
+    ->first();
 
     if (!$vacataire) {
 
-        return back()->withErrors([
-            'message' => 'Informations incorrectes'
-        ]);
+        return back()->with(
+            'error',
+            'Informations incorrectes'
+        );
     }
 
-    return Inertia::render(
-        'Vacataires/SuiviDossier',
-        [
-            'vacataire' => $vacataire
-        ]
-    );
+    session([
+        'vacataire_id' => $vacataire->id
+    ]);
+
+    // return redirect(
+    //     '/suivi-dossier'
+    // );
+    return redirect("/suivi-dossier/{$vacataire->id}");
+}
+
+    public function superadminIndex()
+    {
+        $vacataires = Vacataire::latest()->get();
+
+        return Inertia::render(
+            'SuperAdmin/Vacataires',
+            [
+                'vacataires' => $vacataires
+            ]
+        );
+    }
+
+    public function showSuperAdmin(Vacataire $vacataire)
+    {
+        return Inertia::render(
+            'SuperAdmin/ShowVacataires',
+            [
+                'vacataire' => $vacataire
+            ]
+        );
+    }
+
+//     public function suiviDossier()
+// {
+//     $vacataire = Vacataire::find(
+//         session('vacataire_id')
+//     );
+
+//     if (!$vacataire) {
+
+//         return redirect(
+//             '/espace-vacataire'
+//         );
+//     }
+
+//     return Inertia::render(
+//         'Vacataires/SuiviDossier',
+//         [
+//             'vacataire' => $vacataire
+//         ]
+//     );
+// }
+
+public function suiviDossier(Vacataire $vacataire)
+{
+    return Inertia::render('Vacataires/SuiviDossier', [
+        'vacataire' => $vacataire
+    ]);
 }
 }

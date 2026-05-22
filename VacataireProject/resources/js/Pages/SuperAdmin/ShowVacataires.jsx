@@ -1,6 +1,6 @@
 import { router, Link, Head } from '@inertiajs/react';
 import React from 'react';
-import AdminLayout from '../../Layouts/AdminLayout';
+import SuperAdminLayout from "@/Layouts/SuperAdminLayout";
 
 export default function Show({ vacataire }) {
     
@@ -38,7 +38,7 @@ export default function Show({ vacataire }) {
     );
 
     return (
-        <AdminLayout>
+        <SuperAdminLayout>
             <Head title={`Dossier de ${vacataire.nom} ${vacataire.prenom} - ENS`} />
 
             {/* Injection d'un petit style utilitaire pour l'effet de survol des documents */}
@@ -66,7 +66,7 @@ export default function Show({ vacataire }) {
                     </h2>
                 </div>
                 <div>
-                    <Link href="/vacataires" className="btn btn-sm btn-outline-secondary px-3 rounded-2 fw-medium">
+                    <Link href="/superadmin/vacataires" className="btn btn-sm btn-outline-secondary px-3 rounded-2 fw-medium">
                         ← Retour à la liste
                     </Link>
                 </div>
@@ -175,6 +175,6 @@ export default function Show({ vacataire }) {
                     )}
                 </div>
             </div>
-        </AdminLayout>
+        </SuperAdminLayout>
     );
 }

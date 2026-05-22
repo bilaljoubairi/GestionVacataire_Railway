@@ -1,308 +1,128 @@
-// import React from "react";
-// import { Link } from "@inertiajs/react";
-
-// export default function Dashboard({
-//     totalAdmins,
-//     totalVacataires
-// }) {
-
-//     return (
-//         <div className="container mt-5">
-
-//             <div className="d-flex justify-content-between align-items-center mb-5">
-
-//                 <h1>Super Admin Dashboard</h1>
-
-//                 <Link
-//                     href="/logout"
-//                     method="post"
-//                     as="button"
-//                     className="btn btn-danger"
-//                 >
-//                     Logout
-//                 </Link>
-
-//             </div>
-
-//             <div className="row">
-
-//                 <div className="col-md-6 mb-4">
-//                     <div className="card shadow border-0">
-//                         <div className="card-body text-center">
-
-//                             <h3>Total Admins</h3>
-
-//                             <h1 className="text-primary mt-3">
-//                                 {totalAdmins}
-//                             </h1>
-
-//                             <Link
-//                                 href="/superadmin/admins"
-//                                 className="btn btn-dark mt-3"
-//                             >
-//                                 Gérer les Admins
-//                             </Link>
-
-//                         </div>
-//                     </div>
-//                 </div>
-
-//                 <div className="col-md-6 mb-4">
-//                     <div className="card shadow border-0">
-//                         <div className="card-body text-center">
-
-//                             <h3>Total Vacataires</h3>
-
-//                             <h1 className="text-success mt-3">
-//                                 {totalVacataires}
-//                             </h1>
-
-//                             <Link
-//                                 href="/vacataires"
-//                                 className="btn btn-success mt-3"
-//                             >
-//                                 Gérer les Vacataires
-//                             </Link>
-// {/*  */}
-//                         </div>
-//                     </div>
-//                 </div>
-
-//             </div>
-
-//         </div>
-//     );
-// }
-
-
 import React from "react";
 import { Link } from "@inertiajs/react";
-
-export default function Dashboard({
-    totalAdmins,
-    totalVacataires
-}) {
+import SuperAdminLayout from "@/Layouts/SuperAdminLayout";
+export default function Dashboard({ totalAdmins, totalVacataires }) {
+    // Petit helper pour vérifier si le lien est actif (à adapter selon vos besoins réels)
+    const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
 
     return (
-        <div className="d-flex">
+        <SuperAdminLayout>
+            <div className="d-flex" style={{ minHeight: "100vh", backgroundColor: "#f8fafc" }}>
 
-            {/* SIDEBAR */}
+                {/* SIDEBAR */}
 
-            <div
-                className="text-white d-flex flex-column p-4"
-                style={{
-                    width: "270px",
-                    minHeight: "100vh",
-                    background: "#1e293b"
-                }}
-            >
 
-                <div>
+                {/* CONTENT AREA */}
+                <div className="flex-grow-1 p-5">
 
-                    <h3 className="fw-bold mb-1">
-                        Directeur
-                    </h3>
+                    {/* HEADER */}
+                    <div className="d-flex justify-content-between align-items-center mb-5">
+                        <div>
+                            <h2 className="fw-bold tracking-tight" style={{ color: "#0f172a" }}>
+                                Tableau de bord
+                            </h2>
+                            <p className="text-muted mb-0" style={{ fontSize: "0.95rem" }}>
+                                Gestion centralisée des administrateurs et des enseignants vacataires de l'ENS.
+                            </p>
+                        </div>
 
-                    <p
-                        className="small mb-5"
-                        style={{
-                            color: "#cbd5e1"
-                        }}
-                    >
-                        Espace Super Administration
-                    </p>
+                        {/* Badge de statut ou date optionnel pour faire pro */}
+                        <div className="bg-white px-3 py-2 rounded-3 shadow-sm border text-muted small d-flex align-items-center gap-2">
+                            <span className="d-inline-block rounded-circle bg-success" style={{ width: "8px", height: "8px" }}></span>
+                            Session Directeur Active
+                        </div>
+                    </div>
 
-                    <ul className="nav flex-column gap-2">
+                    {/* CARDS STATS */}
+                    <div className="row g-4">
 
-                        <li>
-                            <Link
-                                href="/superadmin/dashboard"
-                                className="btn w-100 text-start text-white py-3 border-0"
-                                style={{
-                                    background: "#334155"
-                                }}
-                            >
-                                📊 Tableau de bord
-                            </Link>
-                        </li>
+                        {/* Card: Admins */}
+                        <div className="col-md-6">
+                            <div className="card border-0 shadow-sm rounded-4" style={{ backgroundColor: "#ffffff" }}>
+                                <div className="card-body p-4">
+                                    <div className="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <p className="text-uppercase fw-semibold tracking-wider text-muted small mb-1">
+                                                Administrateurs
+                                            </p>
+                                            <h1 className="fw-bold mb-2" style={{ color: "#0f172a", fontSize: "2.75rem", letterSpacing: "-0.05em" }}>
+                                                {totalAdmins}
+                                            </h1>
+                                            <Link href="/superadmin/admins" className="small text-primary text-decoration-none d-flex align-items-center gap-1">
+                                                Voir la liste
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+                                            </Link>
+                                        </div>
 
-                        <li>
-                            <Link
-                                href="/vacataires"
-                                className="btn w-100 text-start text-white py-3"
-                                style={{
-                                    background: "transparent",
-                                    border: "1px solid #475569"
-                                }}
-                            >
-                                👨‍🏫 Gestion des Vacataires
-                            </Link>
-                        </li>
-
-                        <li>
-                            <Link
-                                href="/superadmin/admins"
-                                className="btn w-100 text-start text-white py-3"
-                                style={{
-                                    background: "transparent",
-                                    border: "1px solid #475569"
-                                }}
-                            >
-                                👨‍💼 Gestion des Admins
-                            </Link>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-                <div className="mt-auto">
-
-                    <Link
-                        href="/logout"
-                        method="post"
-                        as="button"
-                        className="btn btn-danger w-100 py-3"
-                    >
-                        Déconnexion
-                    </Link>
-
-                </div>
-
-            </div>
-
-            {/* CONTENT */}
-
-            <div
-                className="flex-grow-1 p-5"
-                style={{
-                    backgroundColor: "#f1f5f9",
-                    minHeight: "100vh"
-                }}
-            >
-
-                {/* HEADER */}
-
-                <div className="mb-5">
-
-                    <h2 className="fw-bold">
-                        Tableau de bord Directeur
-                    </h2>
-
-                    <p className="text-muted">
-                        Gestion centralisée des administrateurs et vacataires
-                    </p>
-
-                </div>
-
-                {/* CARDS */}
-
-                <div className="row g-4">
-
-                    <div className="col-md-6">
-
-                        <div
-                            className="card border-0 shadow-sm rounded-4"
-                        >
-
-                            <div className="card-body p-5">
-
-                                <div className="d-flex justify-content-between align-items-center">
-
-                                    <div>
-
-                                        <p
-                                            className="text-muted mb-2"
-                                        >
-                                            Nombre des Admins
-                                        </p>
-
-                                        <h1
-                                            className="fw-bold"
+                                        <div
+                                            className="rounded-3 d-flex align-items-center justify-content-center"
                                             style={{
-                                                color: "#0f172a",
-                                                fontSize: "55px"
+                                                width: "48px",
+                                                height: "48px",
+                                                background: "#eff6ff",
+                                                color: "#2563eb"
                                             }}
                                         >
-                                            {totalAdmins}
-                                        </h1>
-
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
                                     </div>
-
-                                    <div
-                                        className="rounded-circle d-flex align-items-center justify-content-center"
-                                        style={{
-                                            width: "70px",
-                                            height: "70px",
-                                            background: "#dbeafe",
-                                            fontSize: "30px"
-                                        }}
-                                    >
-                                        👨‍💼
-                                    </div>
-
                                 </div>
-
                             </div>
+                        </div>
 
+                        {/* Card: Vacataires */}
+                        <div className="col-md-6">
+                            <div className="card border-0 shadow-sm rounded-4" style={{ backgroundColor: "#ffffff" }}>
+                                <div className="card-body p-4">
+                                    <div className="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <p className="text-uppercase fw-semibold tracking-wider text-muted small mb-1">
+                                                Enseignants Vacataires
+                                            </p>
+                                            <h1 className="fw-bold mb-2" style={{ color: "#0f172a", fontSize: "2.75rem", letterSpacing: "-0.05em" }}>
+                                                {totalVacataires}
+                                            </h1>
+                                            <Link href="/superadmin/vacataires" className="small text-success text-decoration-none d-flex align-items-center gap-1">
+                                                Gérer les dossiers
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+                                            </Link>
+                                        </div>
+
+                                        <div
+                                            className="rounded-3 d-flex align-items-center justify-content-center"
+                                            style={{
+                                                width: "48px",
+                                                height: "48px",
+                                                background: "#ecfdf5",
+                                                color: "#059669"
+                                            }}
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
-
-                    <div className="col-md-6">
-
-                        <div
-                            className="card border-0 shadow-sm rounded-4"
-                        >
-
-                            <div className="card-body p-5">
-
-                                <div className="d-flex justify-content-between align-items-center">
-
-                                    <div>
-
-                                        <p
-                                            className="text-muted mb-2"
-                                        >
-                                            Nombre des Vacataires
-                                        </p>
-
-                                        <h1
-                                            className="fw-bold"
-                                            style={{
-                                                color: "#0f172a",
-                                                fontSize: "55px"
-                                            }}
-                                        >
-                                            {totalVacataires}
-                                        </h1>
-
-                                    </div>
-
-                                    <div
-                                        className="rounded-circle d-flex align-items-center justify-content-center"
-                                        style={{
-                                            width: "70px",
-                                            height: "70px",
-                                            background: "#dcfce7",
-                                            fontSize: "30px"
-                                        }}
-                                    >
-                                        👨‍🏫
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
                 </div>
 
+                {/* CSS d'appoint à ajouter dans votre fichier global ou balise style si nécessaire */}
+                <style jsx>{`
+                .st-hover:hover {
+                    background-color: rgba(255, 255, 255, 0.05) !important;
+                    color: #ffffff !important;
+                    opacity: 1 !important;
+                }
+                .logout-hover:hover {
+                    background-color: rgba(220, 53, 69, 0.1) !important;
+                }
+            `}</style>
             </div>
-
-        </div>
+        </SuperAdminLayout>
     );
 }

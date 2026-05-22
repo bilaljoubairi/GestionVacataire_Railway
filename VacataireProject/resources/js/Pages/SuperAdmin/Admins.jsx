@@ -1,200 +1,8 @@
 
-// import React, { useState } from "react";
-// import { router, usePage } from "@inertiajs/react";
-
-// export default function Admins() {
-
-//     const { admins } = usePage().props;
-
-//     const [form, setForm] = useState({
-
-//         name: "",
-//         email: "",
-//         password: "",
-
-//     });
-
-//     // ================= AJOUT ADMIN =================
-
-//     const handleSubmit = (e) => {
-
-//         e.preventDefault();
-
-//         router.post("/superadmin/admins", form);
-
-//     };
-
-//     // ================= SUPPRIMER ADMIN =================
-
-//     const deleteAdmin = (id) => {
-
-//         if (confirm("Supprimer cet admin ?")) {
-
-//             router.post(`/superadmin/admins/delete/${id}`);
-
-//         }
-
-//     };
-
-//     return (
-
-//         <div className="container mt-5">
-
-//             <div className="d-flex justify-content-between align-items-center mb-4">
-
-//                 <h1 className="fw-bold">
-//                     Gestion des Admins
-//                 </h1>
-
-//             </div>
-
-//             {/* ================= FORMULAIRE ================= */}
-
-//             <div className="card shadow border-0 mb-4">
-
-//                 <div className="card-body">
-
-//                     <h4 className="mb-4">
-//                         Ajouter un Admin
-//                     </h4>
-
-//                     <form onSubmit={handleSubmit}>
-
-//                         <div className="row">
-
-//                             <div className="col-md-4 mb-3">
-
-//                                 <input
-//                                     type="text"
-//                                     className="form-control"
-//                                     placeholder="Nom"
-//                                     value={form.name}
-//                                     onChange={(e) =>
-//                                         setForm({
-//                                             ...form,
-//                                             name: e.target.value
-//                                         })
-//                                     }
-//                                 />
-
-//                             </div>
-
-//                             <div className="col-md-4 mb-3">
-
-//                                 <input
-//                                     type="email"
-//                                     className="form-control"
-//                                     placeholder="Email"
-//                                     value={form.email}
-//                                     onChange={(e) =>
-//                                         setForm({
-//                                             ...form,
-//                                             email: e.target.value
-//                                         })
-//                                     }
-//                                 />
-
-//                             </div>
-
-//                             <div className="col-md-4 mb-3">
-
-//                                 <input
-//                                     type="password"
-//                                     className="form-control"
-//                                     placeholder="Password"
-//                                     value={form.password}
-//                                     onChange={(e) =>
-//                                         setForm({
-//                                             ...form,
-//                                             password: e.target.value
-//                                         })
-//                                     }
-//                                 />
-
-//                             </div>
-
-//                         </div>
-
-//                         <button
-//                             type="submit"
-//                             className="btn btn-primary"
-//                         >
-//                             Ajouter Admin
-//                         </button>
-
-//                     </form>
-
-//                 </div>
-
-//             </div>
-
-//             {/* ================= TABLE ================= */}
-
-//             <div className="card shadow border-0">
-
-//                 <div className="card-body">
-
-//                     <table className="table table-hover">
-
-//                         <thead className="table-dark">
-
-//                             <tr>
-
-//                                 <th>ID</th>
-//                                 <th>Nom</th>
-//                                 <th>Email</th>
-//                                 <th>Actions</th>
-
-//                             </tr>
-
-//                         </thead>
-
-//                         <tbody>
-
-//                             {admins.map((admin) => (
-
-//                                 <tr key={admin.id}>
-
-//                                     <td>{admin.id}</td>
-
-//                                     <td>{admin.name}</td>
-
-//                                     <td>{admin.email}</td>
-
-//                                     <td>
-
-//                                         <button
-//                                             className="btn btn-danger btn-sm"
-//                                             onClick={() =>
-//                                                 deleteAdmin(admin.id)
-//                                             }
-//                                         >
-//                                             Supprimer
-//                                         </button>
-
-//                                     </td>
-
-//                                 </tr>
-
-//                             ))}
-
-//                         </tbody>
-
-//                     </table>
-
-//                 </div>
-
-//             </div>
-
-//         </div>
-
-//     );
-
-// }
 
 import React, { useState } from "react";
 import { router, usePage, Link } from "@inertiajs/react";
-
+import SuperAdminLayout from "@/Layouts/SuperAdminLayout";
 export default function Admins() {
 
     const { admins } = usePage().props;
@@ -235,12 +43,11 @@ export default function Admins() {
 
             router.post(`/superadmin/admins/delete/${id}`);
 
-        }
 
-    };
+    }};
 
     return (
-
+<SuperAdminLayout>
         <div
             className="min-vh-100"
             style={{
@@ -567,7 +374,7 @@ export default function Admins() {
             </div>
 
         </div>
-
+</SuperAdminLayout>
     );
 
 }

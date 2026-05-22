@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->boolean('est_fonctionnaire')->default(false);
             $table->string('lieu_travail')->nullable();
-            $table->string('cin_file');
-            $table->string('arreter_file');
+            $table->string('cin_file')->nullable();
+            $table->string('arreter_file')->nullable();
             $table->string('autorisation_file')->nullable();
             $table->string('attestation_non_travail_file')->nullable();
             $table->enum('statut', [
